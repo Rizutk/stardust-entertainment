@@ -1,0 +1,373 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STARDUST ENTERTAINMENT | Idol Audition</title>
+
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Inter+Tight:wght@400;600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-inner">
+
+            <a href="index.html" class="brand">
+                <span class="brand-symbol">✦</span>
+                <img src="https://i.pinimg.com/736x/7c/82/18/7c82185d10a38943fd1bcda7076dff78.jpg" alt="Stardust Entertainment logo">
+                <small>ENTERTAINMENT</small>
+            </a>
+
+            <nav class="navigation">
+                <a href="index.html">HOME</a>
+                <a href="news.html">NEWS</a>
+                <a href="artists.html">ARTISTS</a>
+                <a href="about.html">ABOUT</a>
+                <a href="contact.html">CONTACT</a>
+            </nav>
+
+            <a href="audition.html" class="header-link active">
+                AUDITION FORM ↗
+            </a>
+
+        </div>
+    </header>
+
+
+    <main>
+
+        <!-- AUDITION SECTION -->
+        <section class="audition-section" id="audition">
+
+            <div class="audition-container">
+
+                <div class="audition-header">
+
+                    <p class="audition-label">
+                        J-POP IDOL CHARACTER AUDITION · TOKYO 2026
+                    </p>
+
+                    <h1 class="audition-heading">IDOL AUDITION</h1>
+
+                    <p class="audition-kana">
+                        次世代アイドルオーディション応募
+                    </p>
+
+                    <p class="audition-intro">
+                        Following the debut of our first idol,
+                        <strong>RIYA (Riyana Nazukii)</strong>,
+                        <strong>STARDUST ENTERTAINMENT</strong> is opening
+                        its doors to original characters ready to shine.
+                        We welcome creators to submit their original idol
+                        characters and become part of our growing J-Pop
+                        entertainment agency.
+                    </p>
+
+                    <p class="audition-meta">
+                        FOCUS: VOCALISTS · DANCERS · IDOL TRAINEES · ALL-ROUNDERS
+                    </p>
+
+                </div>
+
+
+                <!-- AUDITION FORM -->
+                <form class="audition-form" id="auditionForm" novalidate>
+
+                    <!-- CREATOR INFORMATION -->
+                    <div class="audition-field">
+
+                        <label class="audition-field-label" for="creatorName">
+                            CREATOR NAME *
+                        </label>
+
+                        <input
+                            class="audition-input"
+                            type="text"
+                            id="creatorName"
+                            name="creator-name"
+                            placeholder="Enter your name or username"
+                            required>
+
+                    </div>
+
+<!-- CREATOR EMAIL -->
+<div class="audition-field">
+
+    <label class="audition-field-label" for="creatorEmail">
+        CREATOR EMAIL *
+    </label>
+
+    <input
+        class="audition-input"
+        type="email"
+        id="creatorEmail"
+        name="creator-email"
+        placeholder="Enter your email address"
+        required>
+
+</div>
+
+                    <!-- CHARACTER INFORMATION -->
+                    <div class="audition-field">
+
+                        <label class="audition-field-label" for="ocName">
+                            IDOL CHARACTER NAME *
+                        </label>
+
+                        <input
+                            class="audition-input"
+                            type="text"
+                            id="ocName"
+                            name="oc-name"
+                            placeholder="Enter your character's full name"
+                            required>
+
+                    </div>
+
+
+                    <div class="audition-field">
+
+                        <label class="audition-field-label" for="ageRange">
+                            CHARACTER AGE *
+                        </label>
+
+                        <select
+                            class="audition-select"
+                            id="ageRange"
+                            name="age-range"
+                            required>
+
+                            <option value="" selected disabled>
+                                Select character age
+                            </option>
+
+                            <option value="Under 18">Under 18</option>
+                            <option value="18–20">18–20</option>
+                            <option value="21–24">21–24</option>
+                            <option value="25+">25+</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="audition-field">
+
+                        <label class="audition-field-label" for="nationality">
+                            CHARACTER NATIONALITY *
+                        </label>
+
+                        <input
+                            class="audition-input"
+                            type="text"
+                            id="nationality"
+                            name="nationality"
+                            placeholder="Enter character nationality"
+                            required>
+
+                    </div>
+
+
+                    <!-- IDOL CATEGORY -->
+                    <fieldset class="audition-field">
+
+                        <legend class="audition-field-label">
+                            IDOL POSITION / CATEGORY *
+                        </legend>
+
+                        <div class="audition-checkbox-grid">
+
+                            <label class="audition-checkbox-card">
+                                <input type="radio" name="category" value="Vocalist" required>
+                                <span>VOCALIST</span>
+                            </label>
+
+                            <label class="audition-checkbox-card">
+                                <input type="radio" name="category" value="Dancer">
+                                <span>DANCER</span>
+                            </label>
+
+                            <label class="audition-checkbox-card">
+                                <input type="radio" name="category" value="Rapper">
+                                <span>RAPPER</span>
+                            </label>
+
+                            <label class="audition-checkbox-card">
+                                <input type="radio" name="category" value="All-Rounder">
+                                <span>ALL-ROUNDER</span>
+                            </label>
+
+                        </div>
+
+                    </fieldset>
+
+
+                    <!-- CHARACTER SKILLS -->
+                    <fieldset class="audition-field">
+
+                        <legend class="audition-field-label">
+                            CHARACTER TALENTS &amp; SPECIALTIES
+                        </legend>
+
+                        <div class="audition-checkbox-grid">
+
+                            <label class="audition-checkbox-card">
+                                <input type="checkbox" name="skills" value="Singing">
+                                <span>SINGING</span>
+                            </label>
+
+                            <label class="audition-checkbox-card">
+                                <input type="checkbox" name="skills" value="Dancing">
+                                <span>DANCING</span>
+                            </label>
+
+                            <label class="audition-checkbox-card">
+                                <input type="checkbox" name="skills" value="Rapping">
+                                <span>RAPPING</span>
+                            </label>
+
+                            <label class="audition-checkbox-card">
+                                <input type="checkbox" name="skills" value="Songwriting">
+                                <span>SONGWRITING</span>
+                            </label>
+
+                            <label class="audition-checkbox-card">
+                                <input type="checkbox" name="skills" value="Instrumental">
+                                <span>INSTRUMENTAL</span>
+                            </label>
+
+                        </div>
+
+                    </fieldset>
+
+
+                    <!-- CHARACTER PROFILE -->
+                    <div class="audition-field">
+
+                        <label class="audition-field-label" for="characterLore">
+                            CHARACTER PROFILE &amp; BACKGROUND *
+                        </label>
+
+                        <textarea
+                            class="audition-textarea"
+                            id="characterLore"
+                            name="character-lore"
+                            placeholder="Introduce your idol character. Include their personality, background, musical identity, and story..."
+                            required></textarea>
+
+                    </div>
+
+
+                    <!-- CHARACTER REFERENCE -->
+                    <div class="audition-field">
+
+                        <label class="audition-field-label" for="referenceLink">
+                            CHARACTER DESIGN / REFERENCE LINK *
+                        </label>
+
+                        <input
+                            class="audition-input"
+                            type="url"
+                            id="referenceLink"
+                            name="reference-link"
+                            placeholder="https://..."
+                            required>
+
+                    </div>
+
+
+                    <!-- CREATOR MESSAGE -->
+                    <div class="audition-field">
+
+                        <label class="audition-field-label" for="creatorMessage">
+                            WHY SHOULD YOUR CHARACTER JOIN STARDUST?
+                        </label>
+
+                        <textarea
+                            class="audition-textarea"
+                            id="creatorMessage"
+                            name="creator-message"
+                            placeholder="Tell us what makes your idol character unique and why you would like them to join our agency..."></textarea>
+
+                    </div>
+
+
+                    <p class="audition-note">
+                        STARDUST ENTERTAINMENT welcomes original idol
+                        characters (OCs) specializing in J-Pop music,
+                        vocals, dance, and idol performances. Creators
+                        may submit character references and profiles
+                        for consideration. All submissions are subject
+                        to review.
+                    </p>
+
+
+                    <!-- SUBMIT BUTTON -->
+                    <button
+                        type="submit"
+                        class="audition-submit"
+                        id="submitAuditionBtn">
+
+                        SUBMIT AUDITION <span>→</span>
+
+                    </button>
+
+                </form>
+
+
+                <!-- CONFIRMATION PANEL -->
+                <div
+                    class="audition-confirmation"
+                    id="auditionConfirmation"
+                    hidden>
+
+                    <p class="audition-label">
+                        APPLICATION LOGGED · STARDUST ENT.
+                    </p>
+
+                    <h2 class="audition-heading">
+                        APPLICATION RECEIVED
+                    </h2>
+
+                    <p class="audition-kana">
+                        オーディション応募受付完了
+                    </p>
+
+                    <p
+                        class="audition-intro"
+                        id="confirmationSummary">
+                    </p>
+
+                    <!-- SUBMIT ANOTHER BUTTON -->
+                    <button
+                        type="button"
+                        class="audition-submit"
+                        id="submitAnotherBtn">
+
+                        SUBMIT ANOTHER ENTRY <span>→</span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- SUPABASE LIBRARY -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- AUDITION JAVASCRIPT -->
+    <script src="audition.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STARDUST ENTERTAINMENT | Official Website</title>
+
+    <!-- google fonts import -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Inter+Tight:wght@400;600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- header -->
+    <header class="header">
+
+        <div class="header-inner">
+
+            <a href="index.html" class="brand">
+                <span class="brand-symbol">✦</span>
+                <img src="https://i.pinimg.com/736x/7c/82/18/7c82185d10a38943fd1bcda7076dff78.jpg" alt="Stardust Entertainment logo">
+                <small>ENTERTAINMENT</small>
+            </a>
+
+            <nav class="navigation">
+                <a href="index.html" class="active">HOME</a>
+                <a href="news.html">NEWS</a>
+                <a href="artists.html">ARTISTS</a>
+                <a href="about.html">ABOUT</a>
+                <a href="contact.html">CONTACT</a>
+            </nav>
+
+            <a href="audition.html" class="header-link">
+                AUDITION FORM ↗
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <main>
+
+        <!-- hero -->
+        <section class="hero" id="home">
+
+            <div class="hero-background">
+                <img
+                    src="https://i.pinimg.com/736x/35/bc/27/35bc27ef4a3c10bb2a3a4d9ea0bd15d8.jpg"
+                    alt="Riyana Nazukii - Riya">
+            </div>
+
+            <div class="hero-overlay"></div>
+
+            <div class="hero-content">
+
+                <p class="hero-label">
+                    STARDUST ENTERTAINMENT PRESENTS
+                </p>
+
+                <p class="hero-kana">
+                    リヤ ☆ · リヤナ・ナズキ
+                </p>
+
+                <h1>
+                    RIYANA<br>
+                    NAZUKII
+                </h1>
+
+                <p class="hero-subtitle">
+                    JAPANESE SOLO IDOL — RIYA ☆
+                </p>
+
+                <div class="hero-line"></div>
+
+                <p class="hero-description">
+                    Meet Riya, a rising Japanese idol under Stardust Entertainment. Discover her story, artistic identity, and creative journey as she begins her new chapter in the entertainment industry.
+                </p>
+
+                <a href="discover.html" class="hero-button">
+                    DISCOVER MANAGER <span>→</span>
+                </a>
+
+            </div>
+
+            <div class="hero-counter">
+                001 — RIYA · STARDUST ARTISTS · TOKYO, JAPAN
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- OWNER-ONLY ADMIN ACCESS -->
+    <section id="ownerAdminAccess" hidden>
+
+        <a href="admin.html">
+            ✦ ADMIN ACCESS ↗
+        </a>
+
+    </section>
+
+    <style>
+        #ownerAdminAccess {
+            padding: 25px 20px;
+            text-align: center;
+            background: #F3F5FF;
+        }
+
+        #ownerAdminAccess a {
+            display: inline-block;
+            padding: 12px 24px;
+            color: #536BB8;
+            border: 1px solid #8499F2;
+            text-decoration: none;
+            font-family: "Inter Tight", sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            transition: 0.3s ease;
+        }
+
+        #ownerAdminAccess a:hover {
+            background: #8499F2;
+            color: white;
+        }
+    </style>
+
+
+    <!-- SUPABASE -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- OWNER SESSION CHECK -->
+    <script>
+
+        const SUPABASE_URL = "https://uisixbwpukpyyczwummd.supabase.co";
+
+        const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_7GUhggQUBgBp1R_QgH3KTg_GMfPwWrT";
+
+        const ADMIN_EMAIL = "stardust.entertainmentjpn@gmail.com";
+
+        const supabaseClient = supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_PUBLISHABLE_KEY
+        );
+
+        const adminAccess = document.getElementById("ownerAdminAccess");
+
+        async function checkAdminAccess() {
+
+            const { data, error } = await supabaseClient.auth.getUser();
+
+            if (error || !data.user) {
+                adminAccess.hidden = true;
+                return;
+            }
+
+            const isAdmin =
+                data.user.email?.toLowerCase() === ADMIN_EMAIL.toLowerCase();
+
+            adminAccess.hidden = !isAdmin;
+        }
+
+        checkAdminAccess();
+
+        supabaseClient.auth.onAuthStateChange(() => {
+            checkAdminAccess();
+        });
+
+    </script>
+
+</body>
+</html>

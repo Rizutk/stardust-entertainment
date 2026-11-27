@@ -1,0 +1,1633 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>STARDUST ENTERTAINMENT | News & Information</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Inter+Tight:wght@400;600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+
+        /* NEWS ANNOUNCEMENT LINKS */
+
+        .notice-item-link {
+            display: block;
+            color: inherit;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .notice-item-link:hover .notice-item-info h3 {
+            color: #8499F2;
+        }
+
+        .notice-item-link .notice-item {
+            transition: background 0.2s ease;
+        }
+
+        /* ANNOUNCEMENT DETAIL */
+
+        .news-detail {
+            max-width: 850px;
+            margin: 50px auto;
+            padding: 40px;
+            background: #ffffff;
+            border: 1px solid #E0E6F8;
+        }
+
+        .news-detail-back {
+            display: inline-block;
+            margin-bottom: 35px;
+            color: #536BB8;
+            font-family: 'Inter Tight', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .news-detail-back:hover {
+            opacity: 0.65;
+        }
+
+        .news-detail-category {
+            display: inline-block;
+            margin-bottom: 15px;
+            color: #8499F2;
+            font-family: 'Inter Tight', sans-serif;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+        .news-detail-title {
+            margin-bottom: 15px;
+            color: #455785;
+            font-family: 'Inter Tight', sans-serif;
+            font-size: clamp(25px, 5vw, 36px);
+            font-weight: 800;
+            line-height: 1.3;
+        }
+
+        .news-detail-date {
+            display: block;
+            padding-bottom: 25px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #E0E6F8;
+            color: #8499F2;
+            font-family: 'Inter Tight', sans-serif;
+            font-size: 13px;
+        }
+
+        .news-detail-content {
+            color: #455785;
+            font-family: 'Zen Kaku Gothic New', sans-serif;
+            font-size: 15px;
+            line-height: 2;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+
+        .news-detail-message {
+            color: #8499F2;
+            text-align: center;
+            padding: 40px 10px;
+            font-family: 'Inter Tight', sans-serif;
+        }
+
+
+        /* =================================
+           WEVERSE-STYLE MONTHLY CALENDAR
+        ================================= */
+
+        .calendar-panel {
+            background: #ffffff;
+            border: 1px solid #E0E6F8;
+            padding: 25px;
+        }
+
+        .calendar-panel-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 22px;
+        }
+
+        .calendar-panel-title h3 {
+            margin: 0;
+            color: #455785;
+            font-family: 'Inter Tight', sans-serif;
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .calendar-panel-title span {
+            color: #8499F2;
+            font-family: 'Inter Tight', sans-serif;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+        }
+
+        /* MONTH NAVIGATION */
+
+        .calendar-month-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+        }
+
+        .calendar-month-navigation h3 {
+            margin: 0;
+            color: #455785;
+            font-family: 'Inter Tight', sans-serif;
+            font-size: 23px;
+            font-weight: 800;
+        }
+
+        .calendar-nav-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .calendar-nav-button {
+            width: 34px;
+            height: 34px;
+            border: 1px solid #E0E6F8;
+            background: #F3F5FF;
+            color: #536BB8;
+            border-radius: 5px;
+            font-size: 20px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .calendar-nav-button:hover {
+            background: #8499F2;
+            color: #ffffff;
+        }
+
+        /* CALENDAR GRID */
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, minmax(0, 1fr));
+            gap: 5px;
+        }
+
+        .calendar-weekday {
+            padding: 10px 0;
+            color: #8499F2;
+            text-align: center;
+            font-family: 'Inter Tight', sans-serif;
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        .calendar-day {
+            min-width: 0;
+            min-height: 65px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 7px;
+            padding: 10px 3px;
+            border: 1px solid transparent;
+            border-radius: 6px;
+            background: #F8F9FF;
+            color: #455785;
+            font-family: 'Inter Tight', sans-serif;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .calendar-day:hover {
+            background: #EDF0FF;
+            border-color: #DCE5FF;
+        }
+
+        .calendar-day.empty {
+            background: transparent;
+            cursor: default;
+            pointer-events: none;
+        }
+
+        .calendar-day.today {
+            border-color: #8499F2;
+            font-weight: 800;
+        }
+
+        .calendar-day.selected {
+            background: #8499F2;
+            color: #ffffff;
+            border-color: #8499F2;
+        }
+
+        .calendar-day-number {
+            line-height: 1;
+        }
+
+        .calendar-event-dots {
+            display: flex;
+            justify-content: center;
+            gap: 3px;
+            min-height: 6px;
+        }
+
+        .calendar-event-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #8499F2;
+        }
+
+        .calendar-day.selected .calendar-event-dot {
+            background: #ffffff;
+        }
+
+        .calendar-day.selected .calendar-event-dots {
+            opacity: 1;
+        }
+
+        /* SELECTED DATE */
+
+        .calendar-selected-section {
+            margin-top: 28px;
+            padding-top: 22px;
+            border-top: 1px solid #E0E6F8;
+        }
+
+        .calendar-selected-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .calendar-selected-heading h4 {
+            margin: 0;
+            color: #455785;
+            font-family: 'Inter Tight', sans-serif;
+            font-size: 16px;
+            font-weight: 800;
+        }
+
+        .calendar-selected-heading span {
+            color: #8499F2;
+            font-family: 'Inter Tight', sans-serif;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .calendar-empty-message {
+            padding: 22px 10px;
+            background: #F8F9FF;
+            color: #8499F2;
+            text-align: center;
+            font-family: 'Inter Tight', sans-serif;
+            font-size: 13px;
+        }
+
+        /* EVENT ITEMS */
+
+        .calendar-event-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .calendar-event-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 15px;
+            background: #F8F9FF;
+            border-left: 3px solid #8499F2;
+        }
+
+        .calendar-event-date {
+            min-width: 48px;
+            text-align: center;
+            padding: 8px 5px;
+            background: #E8ECFF;
+            border-radius: 5px;
+            color: #536BB8;
+            font-family: 'Inter Tight', sans-serif;
+        }
+
+        .calendar-event-date strong {
+            display: block;
+            font-size: 20px;
+        }
+
+        .calendar-event-date span {
+            display: block;
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        .calendar-event-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .calendar-category {
+            display: inline-block;
+            margin-bottom: 6px;
+            color: #8499F2;
+            font-family: 'Inter Tight', sans-serif;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1.2px;
+        }
+
+        .calendar-event-info h4 {
+            margin: 0 0 6px;
+            color: #455785;
+            font-family: 'Inter Tight', sans-serif;
+            font-size: 15px;
+            font-weight: 800;
+            overflow-wrap: anywhere;
+        }
+
+        .calendar-event-info p {
+            margin: 0;
+            color: #7180A7;
+            font-family: 'Zen Kaku Gothic New', sans-serif;
+            font-size: 12px;
+            line-height: 1.7;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+
+        /* UPCOMING EVENTS */
+
+        .calendar-upcoming {
+            margin-top: 28px;
+            padding-top: 22px;
+            border-top: 1px solid #E0E6F8;
+        }
+
+        .calendar-upcoming-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .calendar-upcoming-title h4 {
+            margin: 0;
+            color: #455785;
+            font-family: 'Inter Tight', sans-serif;
+            font-size: 16px;
+            font-weight: 800;
+        }
+
+        .calendar-upcoming-title span {
+            color: #8499F2;
+            font-family: 'Inter Tight', sans-serif;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .calendar-bottom {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 22px;
+            padding-top: 15px;
+            border-top: 1px solid #E0E6F8;
+            color: #8499F2;
+            font-family: 'Inter Tight', sans-serif;
+            font-size: 11px;
+        }
+
+        .calendar-loading {
+            padding: 25px 10px;
+            color: #8499F2;
+            text-align: center;
+            font-family: 'Inter Tight', sans-serif;
+            font-size: 13px;
+        }
+
+        @media (max-width: 600px) {
+
+            .news-detail {
+                margin: 30px 15px;
+                padding: 25px 20px;
+            }
+
+            .news-detail-title {
+                font-size: 25px;
+            }
+
+            .calendar-panel {
+                padding: 17px 12px;
+            }
+
+            .calendar-panel-title {
+                align-items: flex-start;
+            }
+
+            .calendar-panel-title h3 {
+                font-size: 18px;
+            }
+
+            .calendar-panel-title span {
+                font-size: 9px;
+            }
+
+            .calendar-month-navigation h3 {
+                font-size: 20px;
+            }
+
+            .calendar-day {
+                min-height: 53px;
+                padding: 8px 2px;
+                font-size: 12px;
+                gap: 6px;
+            }
+
+            .calendar-grid {
+                gap: 3px;
+            }
+
+            .calendar-weekday {
+                font-size: 9px;
+            }
+
+            .calendar-event-item {
+                gap: 10px;
+                padding: 12px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="header-inner">
+
+        <a href="index.html" class="brand">
+            <span class="brand-symbol">✦</span>
+            <img src="https://i.pinimg.com/736x/7c/82/18/7c82185d10a38943fd1bcda7076dff78.jpg" alt="Stardust Entertainment logo">
+            <small>ENTERTAINMENT</small>
+        </a>
+
+        <nav class="navigation">
+            <a href="index.html">HOME</a>
+            <a href="news.html" class="active">NEWS</a>
+            <a href="artists.html">ARTISTS</a>
+            <a href="about.html">ABOUT</a>
+            <a href="contact.html">CONTACT</a>
+        </nav>
+
+        <a href="audition.html" class="header-link">
+            AUDITION FORM ↗
+        </a>
+
+    </div>
+
+</header>
+
+
+<main>
+
+<section class="news-section">
+
+    <div class="news-container">
+
+        <!-- PAGE HEADING -->
+
+        <div class="news-page-heading">
+            <p>STARDUST ENTERTAINMENT</p>
+            <h1>NEWS & INFORMATION</h1>
+            <span>ニュース・お知らせ</span>
+        </div>
+
+
+        <!-- ANNOUNCEMENT DETAIL -->
+
+        <section class="news-detail" id="newsDetail" hidden>
+
+            <a href="news.html" class="news-detail-back">
+                <span>←</span> BACK TO NEWS
+            </a>
+
+            <div id="detailContent">
+
+                <p class="news-detail-message">
+                    Loading announcement...
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- NEWS OVERVIEW -->
+
+        <div class="news-overview" id="newsOverview">
+
+            <!-- ANNOUNCEMENTS -->
+
+            <div class="notice-section">
+
+                <div class="section-heading">
+                    <h2>Announcements</h2>
+                    <span>お知らせ</span>
+                </div>
+
+                <div class="notice-panel">
+
+                    <div class="notice-list" id="noticeList">
+
+                        <p class="notice-description">
+                            Loading announcements...
+                        </p>
+
+                    </div>
+
+                    <div class="notice-more">
+                        <span>Thank you for supporting STARDUST.</span>
+                        <span class="notice-arrow">✦</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- INTERACTIVE CALENDAR -->
+
+            <div class="calendar-section">
+
+                <div class="section-heading">
+                    <h2>Calendar</h2>
+                    <span>スケジュール</span>
+                </div>
+
+                <div class="calendar-panel">
+
+                    <div class="calendar-panel-title">
+                        <h3>Monthly Schedule</h3>
+                        <span>EVENT INFORMATION</span>
+                    </div>
+
+
+                    <!-- MONTH NAVIGATION -->
+
+                    <div class="calendar-month-navigation">
+
+                        <h3 id="calendarMonthTitle">
+                            Loading...
+                        </h3>
+
+                        <div class="calendar-nav-buttons">
+
+                            <button
+                                type="button"
+                                class="calendar-nav-button"
+                                id="previousMonth"
+                                aria-label="Previous month">
+                                ‹
+                            </button>
+
+                            <button
+                                type="button"
+                                class="calendar-nav-button"
+                                id="nextMonth"
+                                aria-label="Next month">
+                                ›
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CALENDAR DAYS -->
+
+                    <div class="calendar-grid" id="calendarGrid">
+
+                        <p class="calendar-loading">
+                            Loading calendar...
+                        </p>
+
+                    </div>
+
+
+                    <!-- SELECTED DATE EVENTS -->
+
+                    <div class="calendar-selected-section">
+
+                        <div class="calendar-selected-heading">
+
+                            <h4 id="selectedDateTitle">
+                                Selected Date
+                            </h4>
+
+                            <span>DAILY SCHEDULE</span>
+
+                        </div>
+
+                        <div
+                            class="calendar-event-list"
+                            id="selectedDateEvents">
+
+                            <p class="calendar-empty-message">
+                                Loading events...
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- UPCOMING EVENTS -->
+
+                    <div class="calendar-upcoming">
+
+                        <div class="calendar-upcoming-title">
+
+                            <h4>Upcoming Events</h4>
+
+                            <span>STAY UPDATED</span>
+
+                        </div>
+
+                        <div
+                            class="calendar-event-list"
+                            id="upcomingEvents">
+
+                            <p class="calendar-empty-message">
+                                Loading upcoming events...
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="calendar-bottom">
+
+                        <span>
+                            Stay tuned for upcoming updates.
+                        </span>
+
+                        <span>✦</span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- BOTTOM BRANDING -->
+
+        <div class="news-bottom">
+            <span>STARDUST ENTERTAINMENT</span>
+            <span>✦ EST. 2026 ✦</span>
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- SUPABASE CONNECTION -->
+
+<script>
+
+    // SUPABASE CONNECTION
+
+    const SUPABASE_URL =
+        "https://uisixbwpukpyyczwummd.supabase.co";
+
+    const SUPABASE_PUBLISHABLE_KEY =
+        "sb_publishable_7GUhggQUBgBp1R_QgH3KTg_GMfPwWrT";
+
+    const supabaseClient = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
+
+
+    // PAGE ELEMENTS
+
+    const noticeList = document.getElementById("noticeList");
+
+    const newsDetail = document.getElementById("newsDetail");
+
+    const newsOverview = document.getElementById("newsOverview");
+
+    const detailContent = document.getElementById("detailContent");
+
+
+    // CALENDAR ELEMENTS
+
+    const calendarGrid =
+        document.getElementById("calendarGrid");
+
+    const calendarMonthTitle =
+        document.getElementById("calendarMonthTitle");
+
+    const selectedDateTitle =
+        document.getElementById("selectedDateTitle");
+
+    const selectedDateEvents =
+        document.getElementById("selectedDateEvents");
+
+    const upcomingEvents =
+        document.getElementById("upcomingEvents");
+
+    const previousMonthButton =
+        document.getElementById("previousMonth");
+
+    const nextMonthButton =
+        document.getElementById("nextMonth");
+
+
+    // CALENDAR STATE
+
+    const today = new Date();
+
+    let displayedMonth = new Date(
+        today.getFullYear(),
+        today.getMonth(),
+        1
+    );
+
+    let selectedDate = getDateString(today);
+
+    let calendarEvents = [];
+
+
+    // DATE HELPERS
+
+    function getDateString(date) {
+
+        return (
+            date.getFullYear() + "-" +
+            String(date.getMonth() + 1).padStart(2, "0") + "-" +
+            String(date.getDate()).padStart(2, "0")
+        );
+
+    }
+
+
+    function getTodayString() {
+
+        return getDateString(new Date());
+
+    }
+
+
+    function parseLocalDate(dateString) {
+
+        const parts = dateString.split("-").map(Number);
+
+        return new Date(
+            parts[0],
+            parts[1] - 1,
+            parts[2]
+        );
+
+    }
+
+
+    function formatNewsDate(dateValue) {
+
+        if (!dateValue) {
+            return "";
+        }
+
+        const date = parseLocalDate(dateValue);
+
+        if (Number.isNaN(date.getTime())) {
+            return dateValue;
+        }
+
+        return date.toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric"
+        });
+
+    }
+
+
+    function formatMonth(date) {
+
+        return date.toLocaleDateString("en-US", {
+            month: "long",
+            year: "numeric"
+        });
+
+    }
+
+
+    // DISPLAY MESSAGE
+
+    function showNewsMessage(message) {
+
+        noticeList.replaceChildren();
+
+        const paragraph = document.createElement("p");
+
+        paragraph.className = "notice-description";
+
+        paragraph.textContent = message;
+
+        noticeList.appendChild(paragraph);
+
+    }
+
+
+    function showDetailMessage(message) {
+
+        detailContent.replaceChildren();
+
+        const paragraph = document.createElement("p");
+
+        paragraph.className = "news-detail-message";
+
+        paragraph.textContent = message;
+
+        detailContent.appendChild(paragraph);
+
+    }
+
+
+    // CREATE ANNOUNCEMENT ITEM
+
+    function createNewsItem(item, index) {
+
+        const link = document.createElement("a");
+
+        link.className = "notice-item-link";
+
+        link.href = "news.html?id=" +
+            encodeURIComponent(item.id);
+
+
+        const article = document.createElement("article");
+
+        article.className = "notice-item";
+
+
+        const icon = document.createElement("span");
+
+        if (index === 0) {
+
+            icon.className = "notice-pin";
+
+            icon.textContent = "✦";
+
+        } else {
+
+            icon.className = "notice-bullet";
+
+            icon.textContent = "●";
+
+        }
+
+
+        const info = document.createElement("div");
+
+        info.className = "notice-item-info";
+
+
+        const category = document.createElement("span");
+
+        category.className = "notice-type";
+
+        const categoryName = item.category || "NEWS";
+
+        category.textContent = categoryName.toUpperCase();
+
+        const categoryClass = categoryName.toLowerCase();
+
+        if (["project", "website"].includes(categoryClass)) {
+
+            category.classList.add(categoryClass);
+
+        }
+
+
+        const title = document.createElement("h3");
+
+        title.textContent =
+            item.title || "Untitled Announcement";
+
+
+        const date = document.createElement("span");
+
+        date.className = "notice-date";
+
+        date.textContent =
+            formatNewsDate(item.publish_date);
+
+
+        const description = document.createElement("p");
+
+        description.className = "notice-description";
+
+        description.textContent = item.content || "";
+
+
+        info.appendChild(category);
+
+        info.appendChild(title);
+
+        info.appendChild(date);
+
+        info.appendChild(description);
+
+        article.appendChild(icon);
+
+        article.appendChild(info);
+
+        link.appendChild(article);
+
+        return link;
+
+    }
+
+
+    // LOAD PUBLIC ANNOUNCEMENTS
+
+    async function loadPublicNews() {
+
+        showNewsMessage("Loading announcements...");
+
+        const todayString = getTodayString();
+
+        try {
+
+            const { data, error } = await supabaseClient
+
+                .from("news_announcements")
+
+                .select("id, title, category, content, publish_date, status")
+
+                .eq("status", "Published")
+
+                .lte("publish_date", todayString)
+
+                .order("publish_date", {
+                    ascending: false
+                });
+
+
+            if (error) {
+                throw error;
+            }
+
+
+            noticeList.replaceChildren();
+
+
+            if (!data || data.length === 0) {
+
+                showNewsMessage(
+                    "There are currently no announcements. Please check back soon!"
+                );
+
+                return;
+
+            }
+
+
+            data.forEach((item, index) => {
+
+                const newsItem = createNewsItem(item, index);
+
+                noticeList.appendChild(newsItem);
+
+            });
+
+
+        } catch (error) {
+
+            console.error("News loading error:", error);
+
+            showNewsMessage(
+                "Unable to load announcements. Please try again later."
+            );
+
+        }
+
+    }
+
+
+    // CREATE CALENDAR EVENT CARD
+
+    function createCalendarEventCard(item) {
+
+        const article = document.createElement("article");
+
+        article.className = "calendar-event-item";
+
+
+        const dateBox = document.createElement("div");
+
+        dateBox.className = "calendar-event-date";
+
+
+        const date = parseLocalDate(item.event_date);
+
+
+        const day = document.createElement("strong");
+
+        day.textContent = String(date.getDate());
+
+
+        const month = document.createElement("span");
+
+        month.textContent = date.toLocaleDateString(
+            "en-US",
+            { month: "short" }
+        ).toUpperCase();
+
+
+        dateBox.appendChild(day);
+
+        dateBox.appendChild(month);
+
+
+        const info = document.createElement("div");
+
+        info.className = "calendar-event-info";
+
+
+        const category = document.createElement("span");
+
+        category.className = "calendar-category";
+
+        category.textContent =
+            (item.category || "EVENT").toUpperCase();
+
+
+        const title = document.createElement("h4");
+
+        title.textContent =
+            item.title || "Untitled Event";
+
+
+        const description = document.createElement("p");
+
+        description.textContent =
+            item.description || "More information coming soon.";
+
+
+        info.appendChild(category);
+
+        info.appendChild(title);
+
+        info.appendChild(description);
+
+
+        article.appendChild(dateBox);
+
+        article.appendChild(info);
+
+        return article;
+
+    }
+
+
+    // DISPLAY EMPTY CALENDAR MESSAGE
+
+    function showCalendarMessage(container, message) {
+
+        container.replaceChildren();
+
+        const paragraph = document.createElement("p");
+
+        paragraph.className = "calendar-empty-message";
+
+        paragraph.textContent = message;
+
+        container.appendChild(paragraph);
+
+    }
+
+
+    // GET EVENTS FOR A DATE
+
+    function getEventsForDate(dateString) {
+
+        return calendarEvents.filter(event =>
+            event.event_date === dateString
+        );
+
+    }
+
+
+    // DISPLAY SELECTED DATE EVENTS
+
+    function renderSelectedDateEvents() {
+
+        const date = parseLocalDate(selectedDate);
+
+        selectedDateTitle.textContent =
+            formatNewsDate(selectedDate);
+
+
+        const events = getEventsForDate(selectedDate);
+
+        selectedDateEvents.replaceChildren();
+
+
+        if (events.length === 0) {
+
+            showCalendarMessage(
+                selectedDateEvents,
+                "No scheduled events for this date."
+            );
+
+            return;
+
+        }
+
+
+        events.forEach(event => {
+
+            selectedDateEvents.appendChild(
+                createCalendarEventCard(event)
+            );
+
+        });
+
+    }
+
+
+
+// DISPLAY UPCOMING EVENTS
+
+function renderUpcomingEvents() {
+
+    upcomingEvents.replaceChildren();
+
+    const upcomingSection =
+        document.querySelector(".calendar-upcoming");
+
+    const todayString = selectedDate;
+
+    const upcoming = calendarEvents
+
+        .filter(event =>
+            event.event_date > todayString
+        )
+
+        .sort((a, b) =>
+            a.event_date.localeCompare(b.event_date)
+        )
+
+        .slice(0,1);
+
+
+    // HIDE UPCOMING EVENTS IF THERE ARE NONE
+
+    if (upcoming.length === 0) {
+
+        upcomingSection.hidden = true;
+
+        return;
+
+    }
+
+
+    // SHOW UPCOMING EVENTS
+
+    upcomingSection.hidden = false;
+
+
+    upcoming.forEach(event => {
+
+        upcomingEvents.appendChild(
+            createCalendarEventCard(event)
+        );
+
+    });
+
+}
+
+
+    // RENDER MONTHLY CALENDAR
+
+    function renderCalendar() {
+
+        calendarGrid.replaceChildren();
+
+        calendarMonthTitle.textContent =
+            formatMonth(displayedMonth);
+
+
+        const weekdays = [
+            "SUN", "MON", "TUE", "WED",
+            "THU", "FRI", "SAT"
+        ];
+
+
+        weekdays.forEach(day => {
+
+            const heading = document.createElement("div");
+
+            heading.className = "calendar-weekday";
+
+            heading.textContent = day;
+
+            calendarGrid.appendChild(heading);
+
+        });
+
+
+        const year = displayedMonth.getFullYear();
+
+        const month = displayedMonth.getMonth();
+
+
+        const firstDay = new Date(
+            year,
+            month,
+            1
+        ).getDay();
+
+
+        const daysInMonth = new Date(
+            year,
+            month + 1,
+            0
+        ).getDate();
+
+
+        const totalCells = Math.ceil(
+            (firstDay + daysInMonth) / 7
+        ) * 7;
+
+
+        for (let i = 0; i < totalCells; i++) {
+
+            const dayNumber = i - firstDay + 1;
+
+
+            if (dayNumber < 1 || dayNumber > daysInMonth) {
+
+                const empty = document.createElement("div");
+
+                empty.className = "calendar-day empty";
+
+                calendarGrid.appendChild(empty);
+
+                continue;
+
+            }
+
+
+            const date = new Date(
+                year,
+                month,
+                dayNumber
+            );
+
+            const dateString = getDateString(date);
+
+
+            const button = document.createElement("button");
+
+            button.type = "button";
+
+            button.className = "calendar-day";
+
+            button.setAttribute(
+                "aria-label",
+                formatNewsDate(dateString)
+            );
+
+
+            if (dateString === getTodayString()) {
+
+                button.classList.add("today");
+
+            }
+
+
+            if (dateString === selectedDate) {
+
+                button.classList.add("selected");
+
+            }
+
+
+            const number = document.createElement("span");
+
+            number.className = "calendar-day-number";
+
+            number.textContent = dayNumber;
+
+
+            const dots = document.createElement("span");
+
+            dots.className = "calendar-event-dots";
+
+
+            const events = getEventsForDate(dateString);
+
+
+            events.slice(0, 3).forEach(() => {
+
+                const dot = document.createElement("span");
+
+                dot.className = "calendar-event-dot";
+
+                dots.appendChild(dot);
+
+            });
+
+
+            button.appendChild(number);
+
+            button.appendChild(dots);
+
+
+            button.addEventListener("click", () => {
+
+                selectedDate = dateString;
+
+                renderCalendar();
+
+                renderSelectedDateEvents();
+                
+                renderUpcomingEvents();
+
+            });
+
+
+            calendarGrid.appendChild(button);
+
+        }
+
+    }
+
+
+    // LOAD CALENDAR EVENTS FROM SUPABASE
+
+    async function loadCalendarEvents() {
+
+        showCalendarMessage(
+            selectedDateEvents,
+            "Loading events..."
+        );
+
+        showCalendarMessage(
+            upcomingEvents,
+            "Loading upcoming events..."
+        );
+
+
+        try {
+
+            const { data, error } = await supabaseClient
+
+                .from("calendar_events")
+
+                .select("id, title, category, description, event_date, status")
+
+                .eq("status", "Published")
+
+                .order("event_date", {
+                    ascending: true
+                });
+
+
+            if (error) {
+                throw error;
+            }
+
+
+            calendarEvents = data || [];
+
+
+            renderCalendar();
+
+            renderSelectedDateEvents();
+
+            renderUpcomingEvents();
+
+
+        } catch (error) {
+
+            console.error("Calendar loading error:", error);
+
+            calendarEvents = [];
+
+            renderCalendar();
+
+            showCalendarMessage(
+                selectedDateEvents,
+                "Unable to load events. Please try again later."
+            );
+
+            showCalendarMessage(
+                upcomingEvents,
+                "Unable to load upcoming events."
+            );
+
+        }
+
+    }
+
+
+    // CHANGE MONTH
+
+    previousMonthButton.addEventListener("click", () => {
+
+        displayedMonth.setMonth(
+            displayedMonth.getMonth() - 1
+        );
+
+        renderCalendar();
+
+    });
+
+
+    nextMonthButton.addEventListener("click", () => {
+
+        displayedMonth.setMonth(
+            displayedMonth.getMonth() + 1
+        );
+
+        renderCalendar();
+
+    });
+
+
+    // LOAD FULL ANNOUNCEMENT
+
+    async function loadNewsDetail(newsId) {
+
+        newsOverview.hidden = true;
+
+        newsDetail.hidden = false;
+
+        showDetailMessage("Loading announcement...");
+
+
+        try {
+
+            const todayString = getTodayString();
+
+
+            const { data, error } = await supabaseClient
+
+                .from("news_announcements")
+
+                .select("id, title, category, content, publish_date, status")
+
+                .eq("id", newsId)
+
+                .eq("status", "Published")
+
+                .lte("publish_date", todayString)
+
+                .maybeSingle();
+
+
+            if (error) {
+                throw error;
+            }
+
+
+            if (!data) {
+
+                showDetailMessage(
+                    "This announcement is unavailable or has not been published."
+                );
+
+                return;
+
+            }
+
+
+            detailContent.replaceChildren();
+
+
+            const category = document.createElement("span");
+
+            category.className = "news-detail-category";
+
+            category.textContent =
+                (data.category || "NEWS").toUpperCase();
+
+
+            const title = document.createElement("h2");
+
+            title.className = "news-detail-title";
+
+            title.textContent =
+                data.title || "Untitled Announcement";
+
+
+            const date = document.createElement("span");
+
+            date.className = "news-detail-date";
+
+            date.textContent =
+                formatNewsDate(data.publish_date);
+
+
+            const content = document.createElement("div");
+
+            content.className = "news-detail-content";
+
+            content.textContent =
+                data.content || "No announcement content available.";
+
+
+            detailContent.appendChild(category);
+
+            detailContent.appendChild(title);
+
+            detailContent.appendChild(date);
+
+            detailContent.appendChild(content);
+
+
+            document.title =
+                data.title + " | STARDUST ENTERTAINMENT";
+
+
+        } catch (error) {
+
+            console.error("Announcement detail error:", error);
+
+            showDetailMessage(
+                "Unable to load this announcement. Please try again later."
+            );
+
+        }
+
+    }
+
+
+    // INITIALIZE PAGE
+
+    async function initializeNewsPage() {
+
+        const urlParams = new URLSearchParams(
+            window.location.search
+        );
+
+        const newsId = urlParams.get("id");
+
+
+        if (newsId) {
+
+            await loadNewsDetail(newsId);
+
+        } else {
+
+            await Promise.all([
+                loadPublicNews(),
+                loadCalendarEvents()
+            ]);
+
+        }
+
+    }
+
+
+    // START PAGE
+
+    initializeNewsPage();
+
+</script>
+
+</body>
+</html>
